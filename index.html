@@ -11,13 +11,18 @@
     <div id = 'header'>
         <h1 id = 'name'> Etch-a-Scetch</h1>
     </div>
-    <div id = 'main'>
-        <div class = buttonsPanel>
-            <button id = 'cleanGrid'; class = 'button'> erase </button>
-            <button id = 'makeNewGrid'; class = 'button'> set custom size </button>
+    <div class = 'buttonsPanel'>
+        <button id = 'cleanGrid'; class = 'button'> erase </button>
+        <button id = 'makeNewGrid'; class = 'button'> set custom size </button>
+        <div id = customColorBlock>
+            <button id = 'customColour'; class = 'button'> your colour </button>
+            <input type="color" id="colorPicker" value="#000000">
         </div>
-        <div class='container'></div>
+        <button id = 'randomColour'; class = 'button'> random colour </button>
+
     </div>
+    <div class = 'container'></div>
+   
     <script src="script.js"></script>
 </body>
 </html>

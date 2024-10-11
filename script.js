@@ -1,9 +1,13 @@
 const container = document.querySelector(".container");
 const btnErase = document.querySelector('#cleanGrid');
 const btnMakeGrid = document.querySelector('#makeNewGrid')
+const btnCustomColour = document.querySelector('#customColour');
+const btnRandomColour = document.querySelector('#randomColour')
+let singleColorMode = false;
+
 
 btnMakeGrid.addEventListener('click', function getGridSize() {
-    let gridSize = prompt('Please enter a value heigher than 0 and less than 100', []);
+    let gridSize = prompt('Please enter a value higher than 0 and less than 100', []);
     if (gridSize === null) {
     return;
     }
@@ -11,21 +15,26 @@ btnMakeGrid.addEventListener('click', function getGridSize() {
         makeGrid(gridSize);
 
     } else {
-        alert("Wrong size, please enter a number less than or equal to 100");
+        alert("Incorrect number, please enter a value higher than 0 and less than 100");
         getGridSize(); 
     }
 });
 
-btnErase.addEventListener('click', function() {
-    eraseGrid();
-});
-
-function eraseGrid() {
+btnErase.addEventListener('click', () => {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
     cell.style.backgroundColor = '';
+    });
 });
-}
+
+btnCustomColour.addEventListener('click', () => {
+    singleColorMode = true;
+});
+
+btnRandomColour.addEventListener('click', () => {
+    singleColorMode = false;
+});
+
 
 let gridSize = 16;
 const containerWidth = container.offsetWidth;
@@ -54,17 +63,30 @@ function makeGrid(gridSize){
 makeGrid(gridSize);
 
 // Function to change the background color when mouse enters a cell
-function changeColor(event) {
-    event.target.style.backgroundColor = generateRandomColor();
+function changeColor() {
+    if (singleColorMode) {
+        const selectedColor = document.getElementById('colorPicker').value;
+        this.style.backgroundColor = selectedColor;
+    } else {
+        const randomColor = getRandomColor();
+        this.style.backgroundColor = randomColor;
+    }
 }
 
-function generateRandomColor(){
-    let maxVal = 0xFFFFFF; // 16777215
-    console.log(maxVal)
-    let randomNumber = Math.random() * maxVal; 
-    randomNumber = Math.floor(randomNumber);
-    randomNumber = randomNumber.toString(16);
-    let randColor = randomNumber.padStart(6, 0);   
-    return `#${randColor.toUpperCase()}`
+javascript
+function getRandomColor() {
+    const hueRanges = [
+        [0, 60],   // Red to Yellow
+        [120, 180], // Green to Cyan
+        [240, 300]  // Blue to Purple
+    ];
+    const randomRange = hueRanges[Math.floor(Math.random() * hueRanges.length)];
+    const hue = Math.floor(Math.random() * (randomRange[1] - randomRange[0] + 1)) + randomRange[0];
+    
+    const saturation = Math.floor(Math.random() * 20) + 80; // 80% - 100%
+    const lightness = Math.floor(Math.random() * 20) + 50; // 50% - 70%
+    
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
+
 console.log(generateRandomColor()); 
